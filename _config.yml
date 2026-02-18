@@ -1,0 +1,15 @@
+title: My Site
+description: A Mac OS X-style Jekyll blog
+baseurl: ""
+url: ""
+markdown: kramdown
+
+plugins:
+  - jekyll-feed
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post

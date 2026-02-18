@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <style>
+    :root, [data-theme="light"] {
+      --bg-image: url('https://github.com/illusionyy/illusionyy.github.io/raw/refs/heads/main/assets/img/light.jpg');
+      --bg-color: #1e2a3a;
+
+      --menubar-from: #e9e9e9;
+      --menubar-to:   #bbbabb;
+      --menubar-border: #444;
+      --menubar-shadow: #141414;
+      --menubar-text: #000;
+      --menubar-text-shadow: 0 1px 1px #dbdbdb;
+
+      --sublist-bg: rgba(255,255,255,0.95);
+      --sublist-shadow: 0 6px 12px rgba(0,0,0,0.7);
+      --sublist-text: #000;
+      --sublist-divider: #e2e2e2;
+
+      --win-title-from: rgba(233,233,233,1.0);
+      --win-title-mid:  rgba(178,178,178,1.0);
+      --win-body: #EDEDED;
+      --win-border-top: #bbb;
+      --win-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 22px 70px 4px rgba(0,0,0,0.56), 0 0 0 1px rgba(0,0,0,0.3);
+
+      --title-text: #3c3c3c;
+      --title-text-shadow: 0 1px 1px #e7e7e7;
+
+      --content-bg: #EDEDED;
+      --content-text: #222;
+      --content-heading: #111;
+      --content-link: #2255aa;
+      --content-pre-bg: #f4f4f4;
+      --content-pre-border: #ccc;
+      --content-code-bg: #f4f4f4;
+      --content-blockquote-border: #aaa;
+      --content-blockquote-text: #555;
+      --content-hr: #ccc;
+      --posts-divider: #ddd;
+      --posts-meta: #888;
+      --posts-excerpt: #555;
+    }
+
+    [data-theme="dark"] {
+      --bg-image: url('https://github.com/illusionyy/illusionyy.github.io/raw/refs/heads/main/assets/img/dark.jpg');
+      --bg-color: #0a0a0f;
+
+      --menubar-from: #2c2c2e;
+      --menubar-to:   #1c1c1e;
+      --menubar-border: #000;
+      --menubar-shadow: #000;
+      --menubar-text: #e8e8e8;
+      --menubar-text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+
+      --sublist-bg: rgba(44,44,46,0.97);
+      --sublist-shadow: 0 6px 20px rgba(0,0,0,0.9);
+      --sublist-text: #e8e8e8;
+      --sublist-divider: #3a3a3c;
+
+      --win-title-from: rgba(58,58,60,1.0);
+      --win-title-mid:  rgba(38,38,40,1.0);
+      --win-body: #1c1c1e;
+      --win-border-top: #000;
+      --win-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 22px 70px 4px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,0,0,0.6);
+
+      --title-text: #c8c8c8;
+      --title-text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+
+      --content-bg: #1c1c1e;
+      --content-text: #d4d4d6;
+      --content-heading: #f0f0f0;
+      --content-link: #5899e8;
+      --content-pre-bg: #2c2c2e;
+      --content-pre-border: #3a3a3c;
+      --content-code-bg: #2c2c2e;
+      --content-blockquote-border: #555;
+      --content-blockquote-text: #999;
+      --content-hr: #3a3a3c;
+      --posts-divider: #3a3a3c;
+      --posts-meta: #666;
+      --posts-excerpt: #999;
+    }
+
+    html, body {
+      overflow: hidden;
+      background: var(--bg-color) var(--bg-image) center/cover no-repeat;
+      font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+      transition: background 0.3s;
+    }
+
+    #head {
+      visibility: visible !important;
+      opacity: 1 !important;
+      z-index: 10000 !important;
+      background: linear-gradient(var(--menubar-from), var(--menubar-to)) !important;
+      border-bottom-color: var(--menubar-border) !important;
+      box-shadow: 0 0 10px var(--menubar-shadow) !important;
+    }
+    #head nav#menu ul li a,
+    #head nav#menu-dx ul li {
+      color: var(--menubar-text) !important;
+      text-shadow: var(--menubar-text-shadow) !important;
+    }
+    #head nav#menu ul li:hover {
+      background: #7793f5;
+      background: linear-gradient(#7793f5, #406df2 50%, #275af1) !important;
+      border-bottom: 1px solid #1746d7;
+    }
+    #head nav#menu ul li:hover a { color: #fff !important; text-shadow: none !important; }
+
+    #head nav#menu ul li ul.sublist {
+      background: var(--sublist-bg) !important;
+      box-shadow: var(--sublist-shadow) !important;
+    }
+    #head nav#menu ul li ul.sublist li a { color: var(--sublist-text) !important; }
+    #head nav#menu ul li ul.sublist li.divider { border-top-color: var(--sublist-divider) !important; }
+    #head nav#menu ul li ul.sublist li:hover a { color: #fff !important; }
+
+    #head nav#menu-dx ul li { color: var(--menubar-text); font-size: 13px; text-shadow: var(--menubar-text-shadow); }
+
+    #main-window {
+      position: absolute;
+      top: calc(50% + 11px);
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(860px, 90vw);
+      max-height: calc(100vh - 60px);
+      background: linear-gradient(var(--win-title-from), var(--win-title-mid) 21px, var(--win-body), var(--win-body) 23px);
+      border-radius: 5px;
+      box-shadow: var(--win-shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    #title-bar {
+      height: 22px;
+      min-height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: default;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    #title-bar h1 {
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--title-text);
+      text-shadow: var(--title-text-shadow);
+      margin: 0;
+      transition: color 0.3s;
+    }
+    nav.control-window { position: absolute; left: 7px; top: 4px; z-index: 10; }
+    nav.control-window a {
+      display: inline-block;
+      margin: 2px 1px;
+      width: 12px; height: 12px;
+      border-radius: 100%;
+      box-shadow: 0 1px 0 rgba(255,255,255,.5);
+      text-indent: -9999px;
+      position: relative;
+    }
+
+    #window-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 30px 28px;
+      background: var(--content-bg);
+      border-top: 1px solid var(--win-border-top);
+      -webkit-user-select: text;
+      user-select: text;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--content-text);
+      transition: background 0.3s, color 0.3s;
+    }
+    #window-content h1, #window-content h2, #window-content h3 { color: var(--content-heading); font-weight: bold; margin: 12px 0 8px; transition: color 0.3s; }
+    #window-content h1 { font-size: 18px; }
+    #window-content h2 { font-size: 15px; }
+    #window-content h3 { font-size: 13px; }
+    #window-content p  { margin-bottom: 10px; }
+    #window-content a  { color: var(--content-link); }
+    #window-content ul, #window-content ol { margin: 8px 0 10px 20px; }
+    #window-content li { margin-bottom: 4px; }
+    #window-content pre { background: var(--content-pre-bg); border: 1px solid var(--content-pre-border); border-radius: 3px; padding: 10px; overflow-x: auto; font-size: 11px; }
+    #window-content code { background: var(--content-code-bg); padding: 1px 4px; border-radius: 2px; font-size: 11px; }
+    #window-content pre code { background: none; padding: 0; }
+    #window-content blockquote { border-left: 3px solid var(--content-blockquote-border); padding-left: 10px; color: var(--content-blockquote-text); margin: 8px 0; }
+    #window-content hr { border: none; border-top: 1px solid var(--content-hr); margin: 16px 0; }
+    #window-content img { max-width: 100%; border-radius: 3px; }
+    .posts-list { list-style: none; margin: 0; padding: 0; }
+    .posts-list li { border-bottom: 1px solid var(--posts-divider); padding: 10px 0; }
+    .posts-list li:last-child { border-bottom: none; }
+    .posts-list a { color: var(--content-link); font-weight: bold; text-decoration: none; font-size: 13px; }
+    .posts-list a:hover { text-decoration: underline; }
+    .posts-list .post-date { font-size: 10px; color: var(--posts-meta); margin-top: 2px; }
+    .posts-list .post-excerpt { font-size: 11px; color: var(--posts-excerpt); margin-top: 4px; }
+    .theme-check { visibility: hidden; margin-right: 4px; }
+    html[data-theme="dark"]  .theme-check-dark,
+    html[data-theme="light"] .theme-check-light { visibility: visible; }
+    nav.control-window a {
+      pointer-events: none;
+      cursor: default;
+    }
+  </style>
+  <script>
+    (function() {
+      var t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+  <div id="head" class="vis">
+    <nav id="menu">
+      <ul>
+        <li class="apple"><a href="{{ '/' | relative_url }}">Apple</a></li>
+        <li class="here">
+          <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+          <ul class="sublist">
+            <li><a href="{{ '/' | relative_url }}">Home</a></li>
+            <li><a href="{{ '/about' | relative_url }}">About</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ '/posts' | relative_url }}">Posts</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ '/contact' | relative_url }}">Contact</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Theme</a>
+          <ul class="sublist">
+            <li>
+              <a href="#" onclick="setTheme('dark'); return false;">
+                <span class="theme-check theme-check-dark"></span>Dark
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="setTheme('light'); return false;">
+                <span class="theme-check theme-check-light"></span>Light
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <nav id="menu-dx">
+      <ul>
+        <li id="clock"></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div id="main-window">
+    <div id="title-bar">
+      <nav class="control-window">
+        <a href="#" class="deactivate">close</a>
+        <a href="#" class="deactivate">min</a>
+        <a href="#" class="deactivate">max</a>
+      </nav>
+      <h1>{{ page.title | default: site.title }}</h1>
+    </div>
+    <div id="window-content">
+      {{ content }}
+    </div>
+  </div>
+
+  <script>
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('theme', t);
+    }
+    function updateClock() {
+      document.getElementById('clock').textContent =
+        new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+_site
+_site/
+**/*.lock
+.jekyll-cache
+.jekyll-cache/
